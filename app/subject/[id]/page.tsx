@@ -11,7 +11,7 @@ export default async function SubjectByIdPage({ params }: SubjectPageProps) {
   const data = getSubjectPageData(id);
   if (!data) notFound();
 
-  return <SubjectTopicView data={data} />;
+  return <SubjectTopicView key={data.id} data={data} />;
 }
 
 export async function generateMetadata({ params }: SubjectPageProps) {

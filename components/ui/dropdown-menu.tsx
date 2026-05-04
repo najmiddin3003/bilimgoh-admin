@@ -1,0 +1,68 @@
+"use client";
+
+import * as React from "react";
+import {
+  DropdownMenu as DropdownMenuPrimitive,
+  DropdownMenuTrigger,
+  DropdownMenuContent as DropdownMenuContentPrimitive,
+  DropdownMenuItem as DropdownMenuItemPrimitive,
+  DropdownMenuPortal,
+  DropdownMenuSeparator as DropdownMenuSeparatorPrimitive,
+} from "@radix-ui/react-dropdown-menu";
+
+import { cn } from "@/lib/utils";
+
+const DropdownMenu = DropdownMenuPrimitive;
+
+const DropdownMenuContent = React.forwardRef<
+  React.ElementRef<typeof DropdownMenuContentPrimitive>,
+  React.ComponentPropsWithoutRef<typeof DropdownMenuContentPrimitive>
+>(({ className, sideOffset = 4, ...props }, ref) => (
+  <DropdownMenuPortal>
+    <DropdownMenuContentPrimitive
+      ref={ref}
+      sideOffset={sideOffset}
+      className={cn(
+        "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-50 max-h-[min(var(--radix-dropdown-menu-content-available-height),var(--viewport-height,24rem))] min-w-[8rem] origin-[var(--radix-dropdown-menu-content-transform-origin)] overflow-y-auto overflow-x-hidden rounded-md border border-border bg-popover p-1 text-popover-foreground shadow-md data-[state=closed]:animate-out data-[state=open]:animate-in",
+        className
+      )}
+      {...props}
+    />
+  </DropdownMenuPortal>
+));
+DropdownMenuContent.displayName = DropdownMenuContentPrimitive.displayName;
+
+const DropdownMenuItem = React.forwardRef<
+  React.ElementRef<typeof DropdownMenuItemPrimitive>,
+  React.ComponentPropsWithoutRef<typeof DropdownMenuItemPrimitive>
+>(({ className, ...props }, ref) => (
+  <DropdownMenuItemPrimitive
+    ref={ref}
+    className={cn(
+      "relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+      className
+    )}
+    {...props}
+  />
+));
+DropdownMenuItem.displayName = DropdownMenuItemPrimitive.displayName;
+
+const DropdownMenuSeparator = React.forwardRef<
+  React.ElementRef<typeof DropdownMenuSeparatorPrimitive>,
+  React.ComponentPropsWithoutRef<typeof DropdownMenuSeparatorPrimitive>
+>(({ className, ...props }, ref) => (
+  <DropdownMenuSeparatorPrimitive
+    ref={ref}
+    className={cn("-mx-1 my-1 h-px bg-border", className)}
+    {...props}
+  />
+));
+DropdownMenuSeparator.displayName = DropdownMenuSeparatorPrimitive.displayName;
+
+export {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+};
